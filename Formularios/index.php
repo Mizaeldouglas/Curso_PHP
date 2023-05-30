@@ -1,9 +1,19 @@
 <?php
+session_start();
+
 require('header.php');
 
-?>
+if ($_SESSION['aviso']) {
+  echo $_SESSION['aviso'];
+  $_SESSION['aviso'] = '';
+}
 
-<form method="post" action="recebedor.php">
+?>
+<br>
+<a href="apagar.php">APAGAR COOKIE</a>
+<br>
+
+<form method="post" action="listNome.php">
 
   <label>
     NOME:
