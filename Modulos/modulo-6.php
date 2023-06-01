@@ -11,22 +11,42 @@
 <body>
   <?php
 
+  use Post as GlobalPost;
+
   class Post
   {
-    public int $likes = 0;
+    private int $id;
+    private int $likes = 0;
     public array $comments = [];
     public string $author;
+
+    // public function __construct($id)
+    // {
+    //   $this->id = $$id;
+    // }
 
     public function aumentarLikes()
     {
       $this->likes++;
     }
+
+    public function getId()
+    {
+      return $this->id;
+    }
+
+    public function setId($id)
+    {
+      $this->id = $id;
+
+      return $this;
+    }
   }
 
-  $post1 = new Post();
-  $post2 = new Post();
-  $post3 = new Post();
-  $post4 = new Post();
+  $post1 = new Post(25);
+  $post2 = new Post(10);
+  $post3 = new Post(11);
+  $post4 = new Post(55);
 
   echo "<br><hr><h3>Typed Properties </h3><br><br>";
   //tipagem 
@@ -46,19 +66,19 @@
   echo $post3->aumentarLikes();
   echo $post4->aumentarLikes();
 
-  echo "Likes: " . $post3->likes . "<br>";
-  echo "Likes: " . $post4->likes . "<br>";
+  // echo "Likes: " . $post3->likes . "<br>";
+  // echo "Likes: " . $post4->likes . "<br>";
 
 
 
   echo "<br><hr><h3>Definindo Classes e Objetos</h3><br><br>";
 
-  $post1->likes = 3;
-  $post2->likes = 10;
+  // $post1->likes = 3;
+  // $post2->likes = 10;
 
 
-  echo "Likes: " . $post1->likes . "<br>";
-  echo "Likes: " . $post2->likes . "<br>";
+  // echo "Likes: " . $post1->likes . "<br>";
+  // echo "Likes: " . $post2->likes . "<br>";
 
 
 
