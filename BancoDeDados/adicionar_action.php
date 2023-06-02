@@ -1,32 +1,27 @@
 <?php
 require 'config.php';
+require 'dao/UsuarioDAOMySQL.php';
 
+$usuarioDAO = new UsuarioDaoMysql($pdo);
 
 $name = filter_input(INPUT_POST, 'name');
 $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
 
 if ($name && $email) {
 
-  $sql = $pdo->prepare("SELECT * FROM usuarios WHERE email = :email");
-  $sql->bindValue(':email', $email);
-  $sql->execute();
+  if ($usuarioDAO->findByEmail($email) === false) {
+    $novoUsuario = new Usuario;
+    $novoUsuario->setNome($name);
+    $novoUsuario->setEmail($email);
 
+    $usuarioDAO->add($novoUsuario);
 
-  if ($sql->rowCount() === 0) {
-    // $pdo->query("INSERT INTO usuarios (nome,email) VALUES ('$name', '$email)");
-
-    //PDO STATAMENT MONTANDOA QUERY
-    $sql = $pdo->prepare("INSERT INTO usuarios(nome , email) VALUES (:name, :email)");
-    $sql->bindValue(':name', $name);
-    $sql->bindValue(':email', $email);
-    $sql->execute();
     header("Location: index.php");
     exit;
   } else {
     header("Location: adicionar.php");
     exit;
   }
-} else {
-  header("Location: adicionar.php");
-  exit;
 }
+header("Location: adicionar.php");
+exit;
